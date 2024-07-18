@@ -2,27 +2,26 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 
 const api = axios.create({
-    withCredentials: true,
     headers: {
         "Content-Type": 'application/json',
     },
 });
 
-export function setBearerToken(accessToken: string) {
-    if (accessToken === undefined) {
-        delete api.defaults.headers["Authorization"]
+api.interceptors.request.use(config => {
+    const authToken = localStorage.getItem('authToken');
+
+    if (authToken) {
+        config.headers.Authorization = `Bearer ${authToken}`;
     }
-    api.defaults.headers = {
-        ...api.defaults.headers,
-        "Authorization": `Bearer ${accessToken}`
-    }
-}
+
+    return config;
+});
 
 // interceptor to catch errors
 const errorInterceptor = (error: any) => {
     // check if it's a server error
     if (!error.response) {
-        // notify.warn('Network/Server error');
+        toast.error("Network/Server error " + error.response.data.message);
         return Promise.reject(error);
     }
 
@@ -64,6 +63,6 @@ const responseInterceptor = (response: any) => {
     return response;
 }
 
-api.interceptors.response.use(responseInterceptor, (error) => errorInterceptor(error));
+api.interceptors.response.use(responseInterceptor, (error: any) => errorInterceptor(error));
 
 export default api;

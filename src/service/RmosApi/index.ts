@@ -1,14 +1,27 @@
 import Api from "@/service/Api";
-import { ICreateTokenRequest } from "@/types";
+import { ICreateTokenRequest, IReservationRequest } from "@/types";
 
-const apiUrl = import.meta.env.VITE_BASE_API_URL;
+const serviceUrl = import.meta.env.VITE_SERVICE_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function createToken(data: ICreateTokenRequest) {
-    const res = await Api({
+    const response = await Api({
         method: "POST",
-        url: `${apiUrl}/security/createToken`,
+        url: `${serviceUrl}/security/createToken`,
         data,
+        withCredentials: false,
     });
 
-    return res;
+
+    return response.data;
+}
+
+export async function getReservation(data: IReservationRequest) {
+    const response = await Api({
+        method: "POST",
+        url: `${apiUrl}/api/Procedure/StpRmforKlasik_2`,
+        data,
+    });
+    
+    return response.data;
 }
