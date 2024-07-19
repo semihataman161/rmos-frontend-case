@@ -3,9 +3,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createToken, getReservation } from '@/service/RmosApi';
 import Header from './components/Header';
+import Table from './components/Table';
+import { formatDate, getDayName } from './utils/dates';
+import { formatNumberByPrecision } from './utils/numbers';
 
 function App() {
-  const [reservation, setReservation] = useState();
+  const [reservations, setReservations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchAndSetBearerToken = useCallback(async () => {
     try {
@@ -48,8 +52,9 @@ function App() {
       };
 
       const response = await getReservation(request);
-      console.log(response.value)
-      setReservation(response.value);
+      const arrangedReservations = response.value.map((element: any, index: number) => ({ id: index, ...element }));
+      setReservations(arrangedReservations);
+      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch and set reservation:', error);
     }
@@ -60,11 +65,48 @@ function App() {
     fetchAndSetReservation();
   }, [fetchAndSetBearerToken, fetchAndSetReservation]);
 
+  const tableHeaders = [
+    {
+      field: "Tarih",
+      headerName: 'Tarih',
+      valueGetter: (value: any, row: any) => formatDate(value)
+    },
+    { field: "Mevcut", headerName: 'Mevcut' },
+    { field: "Oda", headerName: 'Oda' },
+    { field: "Yetişkin", headerName: 'Yetişkin' },
+    { field: "Çocuk", headerName: 'Çocuk' },
+    { field: "Free", headerName: 'Free' },
+    { field: "Toplam Kişi", headerName: 'Top.Kisi' },
+    { field: "Pax(P)", headerName: 'Pax' },
+    {
+      field: "Yuzde%(Net)",
+      headerName: 'Net %',
+      valueGetter: (value: any, row: any) => `%${formatNumberByPrecision(value * 100, 3)}`
+    },
+    { field: "Son Durum", headerName: 'Son durum' },
+    {
+      field: "Package Tutar",
+      headerName: 'Package',
+      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2)
+    },
+    { field: "Gun Tarih", headerName: 'Gun Tarih' },
+    {
+      field: "Gün İsmi",
+      headerName: 'Gün İsmi',
+      valueGetter: (value: any, row: any) => getDayName(row["Gun Tarih"])
+    },
+    {
+      field: "Pax(Y/C2)",
+      headerName: 'Pax(Y+C/2)',
+      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2)
+    },
+  ];
+
   return (
     <>
       <div>
         <ToastContainer />
-        <Header
+        {/* <Header
           ayKodu="abc123xyz"
           baslangicTarihi="2024-01-01"
           bitisTarihi="2024-12-31"
@@ -82,7 +124,8 @@ function App() {
           occForecast="forecastABC"
           sirketSecimi="companySelection"
           rap="reportXYZ"
-        />
+        /> */}
+        <Table data={reservations} headers={tableHeaders} loading={loading} />
       </div>
     </>
   );
