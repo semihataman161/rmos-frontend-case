@@ -1,5 +1,5 @@
 import Api from "@/service/Api";
-import { ICreateTokenRequest, IReservationRequest } from "@/types";
+import { ICreateTokenRequest, IReservationRequest } from "@/types/Requests";
 
 const serviceUrl = import.meta.env.VITE_SERVICE_URL;
 const apiUrl = import.meta.env.VITE_API_URL;

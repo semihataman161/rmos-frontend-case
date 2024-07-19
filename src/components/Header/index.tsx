@@ -1,169 +1,133 @@
-import React from 'react';
-import { TextField, Grid, Paper, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Grid,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { ISectionConfig } from '@/types/Header';
+import dayjs, { Dayjs } from 'dayjs';
+import { SelectChangeEvent } from '@mui/material';
 
 interface IProps {
-  ayKodu: string;
-  baslangicTarihi: string;
-  bitisTarihi: string;
-  sistemTarihi: string;
-  alisTarihi: string;
-  konumSecenek: string;
-  dovizSeciniz: string;
-  yuzdeCik: string;
-  type: string;
-  grafikteCikacaklar: string;
-  kalanlar: string;
-  connKontenjan: string;
-  fiiltreler: string;
-  otelDep: string;
-  occForecast: string;
-  sirketSecimi: string;
-  rap: string;
+  sections?: ISectionConfig[];
 }
 
-const Header: React.FC<IProps> = ({
-  ayKodu,
-  baslangicTarihi,
-  bitisTarihi,
-  sistemTarihi,
-  alisTarihi,
-  konumSecenek,
-  dovizSeciniz,
-  yuzdeCik,
-  type,
-  grafikteCikacaklar,
-  kalanlar,
-  connKontenjan,
-  fiiltreler,
-  otelDep,
-  occForecast,
-  sirketSecimi,
-  rap,
-}) => {
-  // Example options for the Select component
-  const ayKoduOptions = ['Option1', 'Option2', 'Option3'];
-  const tarihOptions = ['Option1', 'Option2', 'Option3']; // Example options for tarih fields
+const Header: React.FC<IProps> = ({ sections = [] }) => {
+  const [localSections, setLocalSections] = useState<ISectionConfig[]>(sections);
+
+  const handleChange = (sectionIndex: number, elementIndex: number) => (
+    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>,
+    newValue?: any
+  ) => {
+    const updatedSections = [...localSections];
+    const section = updatedSections[sectionIndex];
+    const element = section.elements[elementIndex];
+
+    if (element.type === 'select') {
+      section.elements[elementIndex] = {
+        ...element,
+        value: event.target.value,
+      };
+    } else if (element.type === 'date') {
+      section.elements[elementIndex] = {
+        ...element,
+        value: newValue ? newValue.toISOString() : null,
+      };
+    } else if (element.type === 'radio') {
+      section.elements[elementIndex] = {
+        ...element,
+        value: event.target.value,
+      };
+    } else {
+      section.elements[elementIndex] = {
+        ...element,
+        value: event.target.value,
+      };
+    }
+
+    setLocalSections(updatedSections);
+
+    if (element.onChange) {
+      element.onChange(event, newValue);
+    }
+  };
 
   return (
     <Paper elevation={3} style={{ padding: 16, backgroundColor: '#e3f2fd' }}>
       <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', gap: '16px' }}>
-        {/* Section 1 */}
-        <Grid item xs={12} sm={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}>
-          {[
-            {
-              label: 'Ay Kodu',
-              value: ayKodu,
-              options: ayKoduOptions,
-            },
-            {
-              label: 'Başlangıç Tarihi',
-              value: baslangicTarihi,
-              options: tarihOptions,
-            },
-            {
-              label: 'Bitiş Tarihi',
-              value: bitisTarihi,
-              options: tarihOptions,
-            },
-            {
-              label: 'Sistem Tarihi',
-              value: sistemTarihi,
-              options: tarihOptions,
-            },
-            {
-              label: 'Alış Tarihi',
-              value: alisTarihi,
-              options: tarihOptions,
-            },
-          ].map(({ label, value, options }) => (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Typography variant="subtitle2" color="textSecondary">
-                {label}
-              </Typography>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>{label}</InputLabel>
-                <Select
-                  value={value}
-                  label={label}
-                  inputProps={{ readOnly: true }}
-                  renderValue={(selected) => selected}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          ))}
-        </Grid>
-
-        {/* Section 2 */}
-        <Grid item xs={12} sm={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}>
-          {[
-            { label: 'Konum Secenek', value: konumSecenek },
-            { label: 'Doviz Seçiniz', value: dovizSeciniz },
-            { label: 'Type', value: type },
-            { label: 'Yüzde Çıksın', value: yuzdeCik },
-          ].map(({ label, value }) => (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Typography variant="subtitle2" color="textSecondary">
-                {label}
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={value}
-                InputProps={{ readOnly: true }}
-              />
-            </div>
-          ))}
-        </Grid>
-
-        {/* Section 3 */}
-        <Grid item xs={12} sm={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}>
-          {[
-            { label: 'Grafikte Çıkacaklar', value: grafikteCikacaklar },
-            { label: 'Kalanlar', value: kalanlar },
-            { label: 'Conn Kontenjan', value: connKontenjan },
-            { label: 'Fiiltreler', value: fiiltreler },
-            { label: 'Otel/Dep', value: otelDep },
-            { label: 'Occ% Forecast', value: occForecast },
-          ].map(({ label, value }) => (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Typography variant="subtitle2" color="textSecondary">
-                {label}
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={value}
-                InputProps={{ readOnly: true }}
-              />
-            </div>
-          ))}
-        </Grid>
-
-        {/* Section 4 */}
-        <Grid item xs={12} sm={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}>
-          {[
-            { label: 'Şirket Seçimi', value: sirketSecimi },
-            { label: 'Rap', value: rap },
-          ].map(({ label, value }) => (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Typography variant="subtitle2" color="textSecondary">
-                {label}
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={value}
-                InputProps={{ readOnly: true }}
-              />
-            </div>
-          ))}
-        </Grid>
+        {localSections.map((section, sectionIndex) => (
+          <Grid
+            key={sectionIndex}
+            item
+            xs={12}
+            sm={3}
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}
+          >
+            {section.elements.map(({ label, value, type, options }, elementIndex) => (
+              <div key={elementIndex} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {type === 'select' ? (
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel>{label}</InputLabel>
+                    <Select
+                      value={value}
+                      label={label}
+                      onChange={handleChange(sectionIndex, elementIndex)}
+                    >
+                      {options?.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                ) : type === 'date' ? (
+                  <DatePicker
+                    label={label}
+                    value={value ? dayjs(value) : null}
+                    onChange={(newValue) => handleChange(sectionIndex, elementIndex)(null, newValue)}
+                    slots={{ textField: (params) => <TextField {...params} fullWidth variant="outlined" /> }}
+                    inputFormat="DD.MM.YYYY"
+                  />
+                ) : type === 'radio' ? (
+                  <FormControl component="fieldset">
+                    <InputLabel>{label}</InputLabel>
+                    <RadioGroup
+                      value={value}
+                      onChange={handleChange(sectionIndex, elementIndex)}
+                    >
+                      {options?.map((option) => (
+                        <FormControlLabel
+                          key={option}
+                          value={option}
+                          control={<Radio />}
+                          label={option}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                ) : (
+                  <TextField
+                    label={label}
+                    value={value}
+                    type="text"
+                    InputProps={{ readOnly: true }}
+                    variant="outlined"
+                    fullWidth
+                    onChange={(event) => handleChange(sectionIndex, elementIndex)(event)}
+                  />
+                )}
+              </div>
+            ))}
+          </Grid>
+        ))}
       </Grid>
     </Paper>
   );

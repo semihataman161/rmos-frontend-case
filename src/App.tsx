@@ -8,6 +8,10 @@ import { formatDate, getDayName } from './utils/dates';
 import { formatNumberByPrecision } from './utils/numbers';
 import CustomTab from './components/CustomTab';
 import Footer from './components/Footer';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ISectionConfig } from './types/Header';
+import { SelectChangeEvent } from '@mui/material';
 
 function App() {
   const [reservations, setReservations] = useState<any[]>([]);
@@ -126,45 +130,161 @@ function App() {
   ];
 
   const tabContent = {
-    "Mevcut Forecast": <></>,
-    "Acenta Forecast": <></>,
-    "StopSale Forecast": <></>,
+    "Mevcut Forecast": <>NOT IPLEMENTED YET</>,
+    "Acenta Forecast": <>NOT IPLEMENTED YET</>,
+    "StopSale Forecast": <>NOT IPLEMENTED YET</>,
     "Forecast Grafiği": <></>,
     "Tarih Forecast": <Table data={reservations} headers={tableHeaders} loading={loading} />,
-    "Detay Forecast": <></>,
-    "Waiting Forecast": <></>,
-    "Konum Forecast": <></>,
-    "Mevcut Karşılaştır": <></>,
-    "Occupancy General Forecast(2)": <></>
+    "Detay Forecast": <>NOT IPLEMENTED YET</>,
+    "Waiting Forecast": <>NOT IPLEMENTED YET</>,
+    "Konum Forecast": <>NOT IPLEMENTED YET</>,
+    "Mevcut Karşılaştır": <>NOT IPLEMENTED YET</>,
+    "Occupancy General Forecast(2)": <>NOT IPLEMENTED YET</>
   };
 
+  const sections: ISectionConfig[] = [
+    {
+      elements: [
+        {
+          label: 'Ay Kodu',
+          value: 'Haziran',
+          type: 'select',
+          options: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'Başlangıç Tarihi',
+          value: '2024-06-01',
+          type: 'date',
+          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+            console.log('Başlangıç Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
+          },
+        },
+        {
+          label: 'Bitiş Tarihi',
+          value: '2024-06-30',
+          type: 'date',
+          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+            console.log('Bitiş Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
+          },
+        },
+        {
+          label: 'Sistem Tarihi',
+          value: '2024-07-06',
+          type: 'date',
+          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+            console.log('Sistem Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
+          },
+        },
+        {
+          label: 'Alış Tarihi',
+          value: '2024-07-06',
+          type: 'date',
+          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+            console.log('Alış Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
+          },
+        },
+      ],
+    },
+    {
+      elements: [
+        {
+          label: 'Oda Tipi',
+          value: '',
+          type: 'select',
+          options: [],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'Acenta',
+          value: '',
+          type: 'select',
+          options: [],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'For.Grubu',
+          value: '',
+          type: 'select',
+          options: [],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'Pazar',
+          value: '',
+          type: 'select',
+          options: [],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'Acenta.Grup',
+          value: '',
+          type: 'select',
+          options: [],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+      ],
+    },
+    {
+      elements: [
+        {
+          label: '',
+          value: 'Verilen Konum',
+          type: 'radio',
+          options: ['Verilen Konum', 'İstenen Konum'],
+          onChange: (event) => {
+            console.log('Gender changed to:', event.target.value);
+          },
+        },
+        {
+          label: 'Döviz Seçiniz',
+          value: 'EURO',
+          type: 'select',
+          options: ["EURO", "DOLAR", "TL"],
+          onChange: (event: SelectChangeEvent<any>) => {
+            console.log('Ay Kodu changed to:', event.target.value);
+          },
+        },
+      ],
+    },
+    {
+      elements: [
+        {
+          label: '',
+          value: 'Confirmed',
+          type: 'radio',
+          options: ['Confirmed', 'Tentative', 'All'],
+          onChange: (event) => {
+            console.log('Gender changed to:', event.target.value);
+          },
+        },
+      ],
+    }
+  ];
+
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div>
         <ToastContainer />
-        {/* <Header
-          ayKodu="abc123xyz"
-          baslangicTarihi="2024-01-01"
-          bitisTarihi="2024-12-31"
-          sistemTarihi="2024-07-18"
-          alisTarihi="2024-07-15"
-          konumSecenek="locationOptionA"
-          dovizSeciniz="currencySelectXYZ"
-          yuzdeCik="percentageOut123"
-          type="typeABC"
-          grafikteCikacaklar="chartItemsXYZ"
-          kalanlar="remainingItems"
-          connKontenjan="quotaAvailable"
-          fiiltreler="filtersXYZ"
-          otelDep="hotelDepot123"
-          occForecast="forecastABC"
-          sirketSecimi="companySelection"
-          rap="reportXYZ"
-        /> */}
+        <Header
+          sections={sections}
+        />
         <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
         <Footer />
       </div>
-    </>
+    </LocalizationProvider>
   );
 }
 
