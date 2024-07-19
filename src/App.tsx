@@ -53,7 +53,25 @@ function App() {
 
       const response = await getReservation(request);
       const arrangedReservations = response.value.map((element: any, index: number) => ({ id: index, ...element }));
-      setReservations(arrangedReservations);
+
+      const aggregatedValues = arrangedReservations.reduce((accumulator: any, currentObject: any) => {
+        for (const [key, value] of Object.entries(currentObject)) {
+          if (typeof value === 'number') {
+            accumulator[key] = (accumulator[key] || 0) + value;
+          } else if (typeof value === 'string') {
+            accumulator[key] = (accumulator[key] || '') + value;
+          }
+
+          if (key === 'Tarih') {
+            accumulator[key] = "30";
+          } else if (['Gun Tarih', 'Gün İsmi'].includes(key)) {
+            accumulator[key] = "";
+          }
+        }
+        return accumulator;
+      }, {});
+
+      setReservations([...arrangedReservations, aggregatedValues]);
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch and set reservation:', error);

@@ -1,45 +1,62 @@
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridCellParams, gridClasses } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
 
 interface ITableProps {
-    data: { id: number; [key: string]: any }[];
+    data: { id: number;[key: string]: any }[];
     headers: { field: string; headerName?: string; valueGetter?: (value: any, row: any) => any }[];
     loading?: boolean;
 }
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-  '& .no-rows-message': {
-    marginTop: theme.spacing(2),
-    color: theme.palette.text.secondary,
-  },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    '& .no-rows-message': {
+        marginTop: theme.spacing(2),
+        color: theme.palette.text.secondary,
+    },
 }));
 
 function CustomNoRowsOverlay() {
-  return (
-    <StyledGridOverlay>
-      <CircularProgress />
-      <Box className="no-rows-message">No rows</Box>
-    </StyledGridOverlay>
-  );
+    return (
+        <StyledGridOverlay>
+            <CircularProgress />
+            <Box className="no-rows-message">No rows</Box>
+        </StyledGridOverlay>
+    );
 }
+
 
 export default function Table({ data, headers, loading = false }: ITableProps) {
     const columns: GridColDef[] = headers.map(({ field, headerName, valueGetter }) => ({
         field,
-        headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1), 
+        headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1),
         width: 150,
         valueGetter,
     }));
 
+    const getRowClassName = (params: GridCellParams<any, any, number>) => {
+        const lastRowIndex = data.length - 1;
+        return params.row.id === data[lastRowIndex].id ? 'last-row' : '';
+    };
+
     return (
-        <Box sx={{ height: 400, width: '100%' }}>
+        <Box
+            sx={{
+                height: '100%',
+                width: '100%',
+                [`.${gridClasses.cell}.last-row`]: {
+                    backgroundColor: '#90EE90', 
+                    color: '#000000',
+                    border: 1,
+                    borderColor: 'primary.light',
+                },
+            }}
+        >
             <DataGrid
                 rows={data}
                 columns={columns}
@@ -47,14 +64,15 @@ export default function Table({ data, headers, loading = false }: ITableProps) {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 5,
+                            pageSize: 20,
                         },
                     },
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[20]}
                 disableRowSelectionOnClick
                 loading={loading}
                 disableColumnFilter
+                getCellClassName={getRowClassName}
             />
         </Box>
     );

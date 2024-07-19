@@ -1,5 +1,6 @@
 export const formatDate = (dateString: string): string => {
     const [year, month, day] = dateString.split('T')[0].split('-');
+    if(!day || !month || !year) return dateString;
     return `${day}.${month}.${year}`;
 };
 
