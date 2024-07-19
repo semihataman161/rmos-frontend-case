@@ -7,6 +7,7 @@ import Table from './components/Table';
 import { formatDate, getDayName } from './utils/dates';
 import { formatNumberByPrecision } from './utils/numbers';
 import CustomTab from './components/CustomTab';
+import Footer from './components/Footer';
 
 function App() {
   const [reservations, setReservations] = useState<any[]>([]);
@@ -161,6 +162,7 @@ function App() {
           rap="reportXYZ"
         /> */}
         <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
+        <Footer />
       </div>
     </>
   );

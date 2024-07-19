@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataGrid, GridColDef, GridCellParams, gridClasses } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
