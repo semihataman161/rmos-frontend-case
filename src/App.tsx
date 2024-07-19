@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Table from './components/Table';
 import { formatDate, getDayName } from './utils/dates';
 import { formatNumberByPrecision } from './utils/numbers';
+import CustomTab from './components/CustomTab';
 
 function App() {
   const [reservations, setReservations] = useState<any[]>([]);
@@ -99,13 +100,15 @@ function App() {
     {
       field: "Yuzde%(Net)",
       headerName: 'Net %',
-      valueGetter: (value: any, row: any) => `%${formatNumberByPrecision(value * 100, 3)}`
+      sortable: false,
+      valueGetter: (value: any, row: any) => `%${formatNumberByPrecision(value * 100, 3)}`,
     },
     { field: "Son Durum", headerName: 'Son durum' },
     {
       field: "Package Tutar",
       headerName: 'Package',
-      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2)
+      sortable: false,
+      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
     },
     { field: "Gun Tarih", headerName: 'Gun Tarih' },
     {
@@ -116,9 +119,23 @@ function App() {
     {
       field: "Pax(Y/C2)",
       headerName: 'Pax(Y+C/2)',
-      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2)
+      sortable: false,
+      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
     },
   ];
+
+  const tabContent = {
+    "Mevcut Forecast": <></>,
+    "Acenta Forecast": <></>,
+    "StopSale Forecast": <></>,
+    "Forecast Grafiği": <></>,
+    "Tarih Forecast": <Table data={reservations} headers={tableHeaders} loading={loading} />,
+    "Detay Forecast": <></>,
+    "Waiting Forecast": <></>,
+    "Konum Forecast": <></>,
+    "Mevcut Karşılaştır": <></>,
+    "Occupancy General Forecast(2)": <></>
+  };
 
   return (
     <>
@@ -143,7 +160,7 @@ function App() {
           sirketSecimi="companySelection"
           rap="reportXYZ"
         /> */}
-        <Table data={reservations} headers={tableHeaders} loading={loading} />
+        <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
       </div>
     </>
   );

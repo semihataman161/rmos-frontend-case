@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 
 interface ITableProps {
     data: { id: number;[key: string]: any }[];
-    headers: { field: string; headerName?: string; valueGetter?: (value: any, row: any) => any }[];
+    headers: { field: string; headerName?: string; sortable?: boolean; valueGetter?: (value: any, row: any) => any }[];
     loading?: boolean;
 }
 
@@ -30,11 +30,11 @@ function CustomNoRowsOverlay() {
     );
 }
 
-
 export default function Table({ data, headers, loading = false }: ITableProps) {
-    const columns: GridColDef[] = headers.map(({ field, headerName, valueGetter }) => ({
+    const columns: GridColDef[] = headers.map(({ field, headerName, sortable = true, valueGetter }) => ({
         field,
         headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1),
+        sortable: sortable,
         width: 150,
         valueGetter,
     }));
@@ -50,7 +50,7 @@ export default function Table({ data, headers, loading = false }: ITableProps) {
                 height: '100%',
                 width: '100%',
                 [`.${gridClasses.cell}.last-row`]: {
-                    backgroundColor: '#90EE90', 
+                    backgroundColor: '#90EE90',
                     color: '#000000',
                     border: 1,
                     borderColor: 'primary.light',
