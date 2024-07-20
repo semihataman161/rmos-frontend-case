@@ -4,7 +4,7 @@ import Table from '@/components/Table';
 import CustomTab from '@/components/CustomTab';
 import ForecastFooter from '@/components/ForecastFooter';
 import { sections } from '@/constants/ForecastHeader';
-import { tableHeaders } from '@/constants/Table';
+import { forecastTableHeaders } from '@/constants/Table';
 import { getReservation } from '@/service/RmosApi';
 
 const ForecastOperations: React.FC = () => {
@@ -73,7 +73,7 @@ const ForecastOperations: React.FC = () => {
         "Acenta Forecast": <>NOT IPLEMENTED YET</>,
         "StopSale Forecast": <>NOT IPLEMENTED YET</>,
         "Forecast Grafiği": <></>,
-        "Tarih Forecast": <Table data={reservations} headers={tableHeaders} loading={loading} />,
+        "Tarih Forecast": <Table data={reservations} headers={forecastTableHeaders} loading={loading} isAggregationAllowed={true}/>,
         "Detay Forecast": <>NOT IPLEMENTED YET</>,
         "Waiting Forecast": <>NOT IPLEMENTED YET</>,
         "Konum Forecast": <>NOT IPLEMENTED YET</>,

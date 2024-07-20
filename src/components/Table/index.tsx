@@ -1,12 +1,17 @@
 import { Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import { DataGrid, GridColDef, GridCellParams, gridClasses } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridCellParams, gridClasses, GridActionsCellItem } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ITableProps {
     data: { id: number;[key: string]: any }[];
     headers: { field: string; headerName?: string; sortable?: boolean; valueGetter?: (value: any, row: any) => any }[];
     loading?: boolean;
+    isAggregationAllowed?: boolean;
+    onDelete?: (id: number) => void;
+    onUpdate?: (id: number) => void;
 }
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
@@ -30,16 +35,47 @@ function CustomNoRowsOverlay() {
     );
 }
 
-export default function Table({ data, headers, loading = false }: ITableProps) {
-    const columns: GridColDef[] = headers.map(({ field, headerName, sortable = true, valueGetter }) => ({
-        field,
-        headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1),
-        sortable: sortable,
-        width: 150,
-        valueGetter,
-    }));
+export default function Table({ data, headers, loading = false, isAggregationAllowed = false, onDelete, onUpdate }: ITableProps) {
+    // Define columns
+    const columns: GridColDef[] = [
+        ...headers.map(({ field, headerName, sortable = true, valueGetter }) => ({
+            field,
+            headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1),
+            sortable: sortable,
+            width: 150,
+            valueGetter,
+        })),
+        ...(onUpdate || onDelete ? [{
+            field: 'actions',
+            headerName: 'İşlemler',
+            type: 'actions',
+            width: 150,
+            renderCell: (params: GridCellParams) => (
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                    {onUpdate && (
+                        <GridActionsCellItem
+                            icon={<EditIcon />}
+                            label="Update"
+                            onClick={() => onUpdate(params.row.id)}
+                            color="primary"
+                        />
+                    )}
+                    {onDelete && (
+                        <GridActionsCellItem
+                            icon={<DeleteIcon />}
+                            label="Delete"
+                            onClick={() => onDelete(params.row.id)}
+                            color="error"
+                        />
+                    )}
+                </Box>
+            ),
+        }] : []),
+    ];
 
     const getRowClassName = (params: GridCellParams<any, any, number>) => {
+        if (!isAggregationAllowed) return '';
+
         const lastRowIndex = data.length - 1;
         return params.row.id === data[lastRowIndex].id ? 'last-row' : '';
     };
@@ -47,8 +83,6 @@ export default function Table({ data, headers, loading = false }: ITableProps) {
     return (
         <Box
             sx={{
-                height: '100%',
-                width: '100%',
                 [`.${gridClasses.cell}.last-row`]: {
                     backgroundColor: '#90EE90',
                     color: '#000000',
@@ -64,11 +98,11 @@ export default function Table({ data, headers, loading = false }: ITableProps) {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 15,
                         },
                     },
                 }}
-                pageSizeOptions={[20]}
+                pageSizeOptions={[15, 50, 100]}
                 disableRowSelectionOnClick
                 loading={loading}
                 disableColumnFilter

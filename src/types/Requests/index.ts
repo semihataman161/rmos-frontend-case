@@ -26,3 +26,8 @@ export interface IReservationRequest {
     trace_Dus_10: number;
     cev_01: null;
 }
+
+export interface IBlackListRequest {
+    db_Id: string;
+    Adi: string;
+}

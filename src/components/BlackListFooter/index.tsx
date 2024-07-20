@@ -38,6 +38,7 @@ const BlackListFooter: React.FC = () => {
                     value={inputValue}
                     onChange={handleChange}
                     sx={{ marginBottom: '10px' }}
+                    type='number'
                 />
             </Box>
         </Box>

@@ -53,7 +53,7 @@ const errorInterceptor = (error: any) => {
 const responseInterceptor = (response: any) => {
     switch (response.status) {
         case 200:
-            // yay!
+            toast.success('Veriler başarılı bir şekilde getirildi.')
             break;
         // any other cases
         default:

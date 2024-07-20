@@ -1,7 +1,7 @@
 import { formatDate, getDayName } from '@/utils/dates';
 import { formatNumberByPrecision } from '@/utils/numbers';
 
-export const tableHeaders = [
+export const forecastTableHeaders = [
     {
         field: "Tarih",
         headerName: 'Tarih',
@@ -39,4 +39,25 @@ export const tableHeaders = [
         sortable: false,
         valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
     },
+];
+
+export const blackListTableHeaders = [
+    { field: "Adi", headerName: 'Adı' },
+    { field: "Soy", headerName: 'Soyadı' },
+    { field: "Tcno", headerName: 'TCKN' },
+    { field: "Kimlik_no", headerName: 'Kimlik No' },
+    {
+        field: "Dogum_tarihi",
+        headerName: 'Doğum Tarihi',
+        valueGetter: (value: any, row: any) => formatDate(value)
+    },
+    {
+        field: "Sistem_tarihi",
+        headerName: 'Sistem Tarihi',
+        valueGetter: (value: any, row: any) => formatDate(value)
+    },
+    { field: "Aciklama", headerName: 'Açıklama' },
+    { field: "Sistem_grubu", headerName: 'Grubu' },
+    { field: "Xml Kodu", headerName: 'Milliyet' },
+    { field: "Kulanici", headerName: 'Kullanıcı' },
 ];
