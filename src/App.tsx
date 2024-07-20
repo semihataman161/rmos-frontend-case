@@ -4,14 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createToken, getReservation } from '@/service/RmosApi';
 import Header from './components/Header';
 import Table from './components/Table';
-import { formatDate, getDayName } from './utils/dates';
-import { formatNumberByPrecision } from './utils/numbers';
 import CustomTab from './components/CustomTab';
 import Footer from './components/Footer';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { ISectionConfig } from './types/Header';
-import { SelectChangeEvent } from '@mui/material';
+import { sections } from './constants/Header';
+import { tableHeaders } from './constants/Table';
 
 function App() {
   const [reservations, setReservations] = useState<any[]>([]);
@@ -89,46 +87,6 @@ function App() {
     fetchAndSetReservation();
   }, [fetchAndSetBearerToken, fetchAndSetReservation]);
 
-  const tableHeaders = [
-    {
-      field: "Tarih",
-      headerName: 'Tarih',
-      valueGetter: (value: any, row: any) => formatDate(value)
-    },
-    { field: "Mevcut", headerName: 'Mevcut' },
-    { field: "Oda", headerName: 'Oda' },
-    { field: "Yetişkin", headerName: 'Yetişkin' },
-    { field: "Çocuk", headerName: 'Çocuk' },
-    { field: "Free", headerName: 'Free' },
-    { field: "Toplam Kişi", headerName: 'Top.Kisi' },
-    { field: "Pax(P)", headerName: 'Pax' },
-    {
-      field: "Yuzde%(Net)",
-      headerName: 'Net %',
-      sortable: false,
-      valueGetter: (value: any, row: any) => `%${formatNumberByPrecision(value * 100, 3)}`,
-    },
-    { field: "Son Durum", headerName: 'Son durum' },
-    {
-      field: "Package Tutar",
-      headerName: 'Package',
-      sortable: false,
-      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
-    },
-    { field: "Gun Tarih", headerName: 'Gun Tarih' },
-    {
-      field: "Gün İsmi",
-      headerName: 'Gün İsmi',
-      valueGetter: (value: any, row: any) => getDayName(row["Gun Tarih"])
-    },
-    {
-      field: "Pax(Y/C2)",
-      headerName: 'Pax(Y+C/2)',
-      sortable: false,
-      valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
-    },
-  ];
-
   const tabContent = {
     "Mevcut Forecast": <>NOT IPLEMENTED YET</>,
     "Acenta Forecast": <>NOT IPLEMENTED YET</>,
@@ -142,138 +100,6 @@ function App() {
     "Occupancy General Forecast(2)": <>NOT IPLEMENTED YET</>
   };
 
-  const sections: ISectionConfig[] = [
-    {
-      elements: [
-        {
-          label: 'Ay Kodu',
-          value: 'Haziran',
-          type: 'select',
-          options: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-          onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'Başlangıç Tarihi',
-          value: '2024-06-01',
-          type: 'date',
-          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
-            console.log('Başlangıç Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
-          },
-        },
-        {
-          label: 'Bitiş Tarihi',
-          value: '2024-06-30',
-          type: 'date',
-          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
-            console.log('Bitiş Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
-          },
-        },
-        {
-          label: 'Sistem Tarihi',
-          value: '2024-07-06',
-          type: 'date',
-          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
-            console.log('Sistem Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
-          },
-        },
-        {
-          label: 'Alış Tarihi',
-          value: '2024-07-06',
-          type: 'date',
-          onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
-            console.log('Alış Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
-          },
-        },
-      ],
-    },
-    {
-      elements: [
-        {
-          label: 'Oda Tipi',
-          value: '',
-          type: 'select',
-          options: [],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('Oda Tipi changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'Acenta',
-          value: '',
-          type: 'select',
-          options: [],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('Acenta changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'For.Grubu',
-          value: '',
-          type: 'select',
-          options: [],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('For.Grubu changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'Pazar',
-          value: '',
-          type: 'select',
-          options: [],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('Pazar changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'Acenta.Grup',
-          value: '',
-          type: 'select',
-          options: [],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('Acenta.Grup changed to:', event.target.value);
-          },
-        },
-      ],
-    },
-    {
-      elements: [
-        {
-          label: 'Konum Seçenek',
-          value: 'Verilen Konum',
-          type: 'radio',
-          options: ['Verilen Konum', 'İstenen Konum'],
-          onChange: (event) => {
-            // console.log('Verilen Konum changed to:', event.target.value);
-          },
-        },
-        {
-          label: 'Döviz Seçiniz',
-          value: 'EURO',
-          type: 'select',
-          options: ["EURO", "DOLAR", "TL"],
-          onChange: (event: SelectChangeEvent<any>) => {
-            // console.log('Döviz Seçiniz changed to:', event.target.value);
-          },
-        },
-      ],
-    },
-    {
-      elements: [
-        {
-          label: 'Type',
-          value: 'Confirmed',
-          type: 'radio',
-          options: ['Confirmed', 'Tentative', 'All'],
-          onChange: (event) => {
-            // console.log('Type changed to:', event.target.value);
-          },
-        },
-      ],
-    }
-  ];
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div>
@@ -281,7 +107,9 @@ function App() {
         <Header
           sections={sections}
         />
-        <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
+        <div style={{ marginTop: '30px' }}>
+          <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
+        </div>
         <Footer />
       </div>
     </LocalizationProvider>

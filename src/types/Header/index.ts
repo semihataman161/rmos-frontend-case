@@ -1,10 +1,9 @@
 import { SelectChangeEvent } from '@mui/material';
 
-// Define the `IElementConfig` interface with `onChange` handler
 export interface IElementConfig {
     label: string;
-    value: string | Date;
-    type: 'text' | 'select' | 'date' | 'radio';
+    value: string | Date | boolean;
+    type: 'text' | 'select' | 'date' | 'radio' | 'checkbox';
     options?: string[];
     onChange?: (event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>, newValue?: any) => void;
 }

@@ -10,11 +10,12 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Typography
+  Typography,
+  Checkbox // Import Checkbox component
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ISectionConfig } from '@/types/Header';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
 
 interface IProps {
@@ -47,6 +48,11 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
         ...element,
         value: event.target.value,
       };
+    } else if (element.type === 'checkbox') {
+      section.elements[elementIndex] = {
+        ...element,
+        value: (event.target as HTMLInputElement).checked,
+      };
     } else {
       section.elements[elementIndex] = {
         ...element,
@@ -69,11 +75,20 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
             key={sectionIndex}
             item
             xs={12}
-            sm={2}
-            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '16px' }}
+            sm={1}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '16px',
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              padding: '10px',
+              maxWidth: { xs: 'none', sm: '190px' }
+            }}
           >
             {section.elements.map(({ label, value, type, options }, elementIndex) => (
-              <div key={elementIndex} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div key={elementIndex} style={{ display: 'flex', flexDirection: 'column' }}>
                 {type === 'select' ? (
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>{label}</InputLabel>
@@ -114,6 +129,16 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
                       ))}
                     </RadioGroup>
                   </FormControl>
+                ) : type === 'checkbox' ? (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={!!value}
+                        onChange={handleChange(sectionIndex, elementIndex)}
+                      />
+                    }
+                    label={label}
+                  />
                 ) : (
                   <TextField
                     label={label}
