@@ -18,14 +18,14 @@ export const forecastTableHeaders = [
         field: "Yuzde%(Net)",
         headerName: 'Net %',
         sortable: false,
-        valueGetter: (value: any, row: any) => `%${formatNumberByPrecision(value * 100, 3)}`,
+        valueGetter: (value: any) => `%${formatNumberByPrecision(value * 100, 3)}`,
     },
     { field: "Son Durum", headerName: 'Son durum' },
     {
         field: "Package Tutar",
         headerName: 'Package',
         sortable: false,
-        valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
+        valueGetter: (value: any) => formatNumberByPrecision(value, 2),
     },
     { field: "Gun Tarih", headerName: 'Gun Tarih' },
     {
@@ -37,7 +37,7 @@ export const forecastTableHeaders = [
         field: "Pax(Y/C2)",
         headerName: 'Pax(Y+C/2)',
         sortable: false,
-        valueGetter: (value: any, row: any) => formatNumberByPrecision(value, 2),
+        valueGetter: (value: any) => formatNumberByPrecision(value, 2),
     },
 ];
 
@@ -49,12 +49,12 @@ export const blackListTableHeaders = [
     {
         field: "Dogum_tarihi",
         headerName: 'Doğum Tarihi',
-        valueGetter: (value: any, row: any) => formatDate(value)
+        valueGetter: (value: any) => formatDate(value)
     },
     {
         field: "Sistem_tarihi",
         headerName: 'Sistem Tarihi',
-        valueGetter: (value: any, row: any) => formatDate(value)
+        valueGetter: (value: any) => formatDate(value)
     },
     { field: "Aciklama", headerName: 'Açıklama' },
     { field: "Sistem_grubu", headerName: 'Grubu' },

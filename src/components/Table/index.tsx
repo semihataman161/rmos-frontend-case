@@ -61,7 +61,7 @@ export default function Table({
         ...(onUpdate || onDelete ? [{
             field: 'actions',
             headerName: 'İşlemler',
-            type: 'actions',
+            type: 'actions' as const,
             width: 150,
             renderCell: (params: GridCellParams) => (
                 <Box sx={{ display: 'flex', gap: 1 }}>

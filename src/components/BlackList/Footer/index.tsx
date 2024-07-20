@@ -7,7 +7,7 @@ const BlackListFooter: React.FC = () => {
     const [inputValue, setInputValue] = React.useState(1);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
+        setInputValue(+event.target.value);
     };
 
     return (

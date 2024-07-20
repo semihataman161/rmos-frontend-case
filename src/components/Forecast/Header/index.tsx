@@ -26,7 +26,7 @@ const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
   const [localSections, setLocalSections] = useState<IHeaderSectionConfig[]>(sections);
 
   const handleChange = (sectionIndex: number, elementIndex: number) => (
-    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null,
     newValue?: any
   ) => {
     const updatedSections = [...localSections];
@@ -36,7 +36,7 @@ const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
     if (element.type === 'select') {
       section.elements[elementIndex] = {
         ...element,
-        value: event.target.value,
+        value: (event as SelectChangeEvent<any>).target.value,
       };
     } else if (element.type === 'date') {
       section.elements[elementIndex] = {
@@ -46,17 +46,17 @@ const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
     } else if (element.type === 'radio') {
       section.elements[elementIndex] = {
         ...element,
-        value: event.target.value,
+        value: (event as React.ChangeEvent<HTMLInputElement>).target.value,
       };
     } else if (element.type === 'checkbox') {
       section.elements[elementIndex] = {
         ...element,
-        value: (event.target as HTMLInputElement).checked,
+        value: (event as React.ChangeEvent<HTMLInputElement>).target.checked,
       };
     } else {
       section.elements[elementIndex] = {
         ...element,
-        value: event.target.value,
+        value: (event as React.ChangeEvent<HTMLInputElement>).target.value,
       };
     }
 
@@ -107,7 +107,7 @@ const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
                 ) : type === 'date' ? (
                   <DatePicker
                     label={label}
-                    value={value ? dayjs(value) : null}
+                    value={typeof value === 'string' || value instanceof Date ? dayjs(value) : null}
                     onChange={(newValue) => handleChange(sectionIndex, elementIndex)(null, newValue)}
                     slots={{ textField: (params) => <TextField {...params} fullWidth variant="outlined" /> }}
                     format="DD.MM.YYYY"

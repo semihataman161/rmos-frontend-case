@@ -5,6 +5,7 @@ import { formatNumberByPrecision } from '@/utils/number';
 import { isEmptyObject } from '@/utils/object';
 import StackedBar from '@/components/StackedBar';
 import { PERCENTAGE_BAR_HEIGHT_COEFFICIENT } from '@/constants/ForecastGraph';
+import { ICategoryData } from '@/types/Forecast';
 
 interface IForecastGraphProps {
     totalReservations: Record<string, any>;

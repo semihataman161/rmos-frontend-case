@@ -4,8 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createToken } from '@/service/RmosApi';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
 import CustomMenu from './components/CustomMenu';
+import Footer from './components/Footer';
 
 function App() {
   const fetchAndSetBearerToken = useCallback(async () => {
@@ -28,9 +28,16 @@ function App() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div>
-        <ToastContainer />
-        <CustomMenu />
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}>
+        <div style={{ flex: 1 }}>
+          <ToastContainer />
+          <CustomMenu />
+        </div>
+        <Footer />
       </div>
     </LocalizationProvider>
   );

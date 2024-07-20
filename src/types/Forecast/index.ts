@@ -5,7 +5,7 @@ export interface IHeaderElementConfig {
     value: string | Date | boolean;
     type: 'text' | 'select' | 'date' | 'radio' | 'checkbox';
     options?: string[];
-    onChange?: (event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>, newValue?: any) => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null, newValue?: any) => void;
 }
 
 export interface IHeaderSectionConfig {
@@ -34,4 +34,10 @@ export interface IGetReservationRequest {
     xFis_Bela_tutar_10: number;
     trace_Dus_10: number;
     cev_01: null;
+}
+
+export interface ICategoryData {
+    value: number[];
+    barColor: string;
+    barHeightCoefficient: number;
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import { IHeaderSectionConfig } from "@/types/Forecast";
 import { SelectChangeEvent } from "@mui/material";
 import { Dayjs } from "dayjs";
@@ -10,15 +11,15 @@ export const sections: IHeaderSectionConfig[] = [
                 value: 'Haziran',
                 type: 'select',
                 options: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Ay Kodu changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Ay Kodu changed to:', event?.target.value);
                 },
             },
             {
                 label: 'Başlangıç Tarihi',
                 value: '2024-06-01',
                 type: 'date',
-                onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+                onChange: (event: any, newValue?: Dayjs) => {
                     console.log('Başlangıç Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
                 },
             },
@@ -26,7 +27,7 @@ export const sections: IHeaderSectionConfig[] = [
                 label: 'Bitiş Tarihi',
                 value: '2024-06-30',
                 type: 'date',
-                onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+                onChange: (event: any, newValue?: Dayjs) => {
                     console.log('Bitiş Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
                 },
             },
@@ -34,7 +35,7 @@ export const sections: IHeaderSectionConfig[] = [
                 label: 'Sistem Tarihi',
                 value: '2024-07-06',
                 type: 'date',
-                onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+                onChange: (event: any, newValue?: Dayjs) => {
                     console.log('Sistem Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
                 },
             },
@@ -42,7 +43,7 @@ export const sections: IHeaderSectionConfig[] = [
                 label: 'Alış Tarihi',
                 value: '2024-07-06',
                 type: 'date',
-                onChange: (event: React.ChangeEvent<HTMLInputElement> | null, newValue?: Dayjs) => {
+                onChange: (event: any, newValue?: Dayjs) => {
                     console.log('Alış Tarihi changed to:', newValue?.format('DD.MM.YYYY'));
                 },
             },
@@ -55,8 +56,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Oda Tipi changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Oda Tipi changed to:', event?.target.value);
                 },
             },
             {
@@ -64,8 +65,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Acenta changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Acenta changed to:', event?.target.value);
                 },
             },
             {
@@ -73,8 +74,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('For.Grubu changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('For.Grubu changed to:', event?.target.value);
                 },
             },
             {
@@ -82,8 +83,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Pazar changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Pazar changed to:', event?.target.value);
                 },
             },
             {
@@ -91,8 +92,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Acenta.Grup changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Acenta.Grup changed to:', event?.target.value);
                 },
             },
         ],
@@ -105,7 +106,7 @@ export const sections: IHeaderSectionConfig[] = [
                 type: 'radio',
                 options: ['Verilen Konum', 'İstenen Konum'],
                 onChange: (event) => {
-                    console.log('Verilen Konum changed to:', event.target.value);
+                    console.log('Verilen Konum changed to:', event?.target.value);
                 },
             },
             {
@@ -113,8 +114,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: 'EURO',
                 type: 'select',
                 options: ["EURO", "DOLAR", "TL"],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Döviz Seçiniz changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Döviz Seçiniz changed to:', event?.target.value);
                 },
             },
             {
@@ -122,7 +123,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: true,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Yüzde Çıksın changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Yüzde Çıksın changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -135,7 +136,7 @@ export const sections: IHeaderSectionConfig[] = [
                 type: 'radio',
                 options: ['Confirmed', 'Tentative', 'All'],
                 onChange: (event) => {
-                    console.log('Type changed to:', event.target.value);
+                    console.log('Type changed to:', event?.target.value);
                 },
             },
         ],
@@ -147,7 +148,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: true,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Dolu Odalar changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Dolu Odalar changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -155,7 +156,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: true,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Boş Odalar changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Boş Odalar changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -163,7 +164,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Toplam(Kişi) changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Toplam(Kişi) changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -171,7 +172,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: true,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Tentative changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Tentative changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -183,7 +184,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Yetişkin changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Yetişkin changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -191,7 +192,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Çocuk changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Çocuk changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -199,7 +200,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Free changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Free changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -211,7 +212,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Arızalı Odalar Çıksın changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Arızalı Odalar Çıksın changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -219,7 +220,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Forecast Kalan changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Forecast Kalan changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -227,7 +228,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Birleşen Odalar changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Birleşen Odalar changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -235,7 +236,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('PM(Sanal) changed:', (event.target as HTMLInputElement).checked);
+                    console.log('PM(Sanal) changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -247,7 +248,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Gelen Oda changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Gelen Oda changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -255,7 +256,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Gelen Yetişkin changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Gelen Yetişkin changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -263,7 +264,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Çocuk Paralı changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Çocuk Paralı changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -271,7 +272,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Birleş(Trace-) changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Birleş(Trace-) changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -283,7 +284,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Giden Oda changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Giden Oda changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -291,7 +292,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Giden Yetişkin changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Giden Yetişkin changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -299,7 +300,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Giden Çocuk Paralı changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Giden Çocuk Paralı changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -307,7 +308,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('Havayolu Mürettabatı changed:', (event.target as HTMLInputElement).checked);
+                    console.log('Havayolu Mürettabatı changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -319,7 +320,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: true,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('PM(Sanal) Satışa Dahil changed:', (event.target as HTMLInputElement).checked);
+                    console.log('PM(Sanal) Satışa Dahil changed:', (event?.target as HTMLInputElement).checked);
                 }
             },
             {
@@ -327,7 +328,7 @@ export const sections: IHeaderSectionConfig[] = [
                 value: false,
                 type: 'checkbox',
                 onChange: (event) => {
-                    console.log('ÖnForecast Fiyatlı changed:', (event.target as HTMLInputElement).checked);
+                    console.log('ÖnForecast Fiyatlı changed:', (event?.target as HTMLInputElement).checked);
                 }
             }
         ],
@@ -339,8 +340,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: 'Rmos Victory Be mine',
                 type: 'select',
                 options: ['Rmos Victory Be mine'],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Şirket Seçimi changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Şirket Seçimi changed to:', event?.target.value);
                 },
             },
             {
@@ -348,8 +349,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: 'Rmos Victory Be mine',
                 type: 'select',
                 options: ['Rmos Victory Be mine'],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Ozet Consolide Sirket changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Ozet Consolide Sirket changed to:', event?.target.value);
                 },
             },
         ],
@@ -361,8 +362,8 @@ export const sections: IHeaderSectionConfig[] = [
                 value: '',
                 type: 'select',
                 options: [''],
-                onChange: (event: SelectChangeEvent<any>) => {
-                    console.log('Rap changed to:', event.target.value);
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any> | null) => {
+                    console.log('Rap changed to:', event?.target.value);
                 },
             },
         ],
