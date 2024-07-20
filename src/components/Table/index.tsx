@@ -100,7 +100,6 @@ export default function Table({
                     border: 1,
                     borderColor: 'primary.light',
                 },
-                height: '56rem'
             }}
         >
             <DataGrid
@@ -119,6 +118,7 @@ export default function Table({
                 loading={loading}
                 disableColumnFilter
                 getCellClassName={getRowClassName}
+                autoHeight={true}
             />
         </Box>
     );

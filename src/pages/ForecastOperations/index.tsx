@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import ForecastHeader from '@/components/ForecastHeader';
+import ForecastHeader from '@/components/Forecast/Header';
 import Table from '@/components/Table';
 import CustomTab from '@/components/CustomTab';
-import ForecastFooter from '@/components/ForecastFooter';
+import ForecastFooter from '@/components/Forecast/Footer';
 import { sections } from '@/constants/ForecastHeader';
 import { forecastTableHeaders } from '@/constants/Table';
 import { getReservation } from '@/service/RmosApi';
