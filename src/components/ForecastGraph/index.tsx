@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import GraphInfo from "./GraphInfo";
 import { formatNumberByPrecision } from "@/utils/number";
+import { isEmptyObject } from "@/utils/object";
 
 interface IForecastGraphProps {
     totalReservations: any;
-}
-
-function isEmptyObject(obj: any): boolean {
-    return Object.keys(obj).length === 0;
 }
 
 const ForecastGraph: React.FC<IForecastGraphProps> = ({ totalReservations }) => {
@@ -15,10 +13,7 @@ const ForecastGraph: React.FC<IForecastGraphProps> = ({ totalReservations }) => 
     const [availableRooms, setAvailableRooms] = useState<number>(0);
     const [totalPeople, setTotalPeople] = useState<number>(0);
     const [totalBeds, setTotalBeds] = useState<number>(0);
-    const [totalAdults, setTotalAdults] = useState<number>(0);
-    const [totalChildren, setTotalChildren] = useState<number>(0);
-    const [totalFree, setTotalFree] = useState<number>(0);
-
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (!isEmptyObject(totalReservations)) {
@@ -26,18 +21,16 @@ const ForecastGraph: React.FC<IForecastGraphProps> = ({ totalReservations }) => 
             setAvailableRooms(totalReservations["Net Oda"]);
             setTotalPeople(totalReservations["Toplam Kişi"]);
             setTotalBeds(totalReservations["Yatak(Mevcut)"]);
-            setTotalAdults(totalReservations["Yetişkin"]);
-            setTotalChildren(totalReservations["Çocuk"]);
-            setTotalFree(totalReservations["Free"]);
+            setLoading(false);
         }
     }, [totalReservations]);
 
     const data = {
         room: `${availableRooms}/${allRooms} (%${formatNumberByPrecision((availableRooms / allRooms) * 100, 2)})`,
         bed: `${totalPeople}/${totalBeds} (%${formatNumberByPrecision((totalPeople / totalBeds) * 100, 2)})`,
-        adult: totalAdults,
-        child: totalChildren,
-        free: totalFree,
+        adult: totalReservations["Yetişkin"] || 0,
+        child: totalReservations["Çocuk"] || 0,
+        free: totalReservations["Free"] || 0,
         total: totalPeople,
         estimatedIncome: totalReservations["Forecast Gelir"] || 0,
         packageInfo: {
@@ -49,7 +42,13 @@ const ForecastGraph: React.FC<IForecastGraphProps> = ({ totalReservations }) => 
     };
 
     return (
-        <GraphInfo data={data} />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            {loading ? (
+                <CircularProgress />
+            ) : (
+                <GraphInfo data={data} />
+            )}
+        </div>
     );
 };
 
