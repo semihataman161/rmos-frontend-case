@@ -75,7 +75,7 @@ const ForecastOperations: React.FC = () => {
         "Mevcut Forecast": <>NOT IPLEMENTED YET</>,
         "Acenta Forecast": <>NOT IPLEMENTED YET</>,
         "StopSale Forecast": <>NOT IPLEMENTED YET</>,
-        "Forecast Grafiği": <ForecastGraph totalReservations={totalReservations}/>,
+        "Forecast Grafiği": <ForecastGraph totalReservations={totalReservations} reservations={reservations}/>,
         "Tarih Forecast": <Table data={reservations} headers={forecastTableHeaders} loading={loading} isAggregationAllowed={true} />,
         "Detay Forecast": <>NOT IPLEMENTED YET</>,
         "Waiting Forecast": <>NOT IPLEMENTED YET</>,
