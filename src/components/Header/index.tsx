@@ -9,7 +9,8 @@ import {
   TextField,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Typography
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ISectionConfig } from '@/types/Header';
@@ -68,8 +69,8 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
             key={sectionIndex}
             item
             xs={12}
-            sm={3}
-            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px' }}
+            sm={2}
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '16px' }}
           >
             {section.elements.map(({ label, value, type, options }, elementIndex) => (
               <div key={elementIndex} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -94,11 +95,11 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
                     value={value ? dayjs(value) : null}
                     onChange={(newValue) => handleChange(sectionIndex, elementIndex)(null, newValue)}
                     slots={{ textField: (params) => <TextField {...params} fullWidth variant="outlined" /> }}
-                    inputFormat="DD.MM.YYYY"
+                    format="DD.MM.YYYY"
                   />
                 ) : type === 'radio' ? (
                   <FormControl component="fieldset">
-                    <InputLabel>{label}</InputLabel>
+                    <Typography>{label}</Typography>
                     <RadioGroup
                       value={value}
                       onChange={handleChange(sectionIndex, elementIndex)}

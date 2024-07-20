@@ -196,7 +196,7 @@ function App() {
           type: 'select',
           options: [],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('Oda Tipi changed to:', event.target.value);
           },
         },
         {
@@ -205,7 +205,7 @@ function App() {
           type: 'select',
           options: [],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('Acenta changed to:', event.target.value);
           },
         },
         {
@@ -214,7 +214,7 @@ function App() {
           type: 'select',
           options: [],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('For.Grubu changed to:', event.target.value);
           },
         },
         {
@@ -223,7 +223,7 @@ function App() {
           type: 'select',
           options: [],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('Pazar changed to:', event.target.value);
           },
         },
         {
@@ -232,7 +232,7 @@ function App() {
           type: 'select',
           options: [],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('Acenta.Grup changed to:', event.target.value);
           },
         },
       ],
@@ -240,12 +240,12 @@ function App() {
     {
       elements: [
         {
-          label: '',
+          label: 'Konum Seçenek',
           value: 'Verilen Konum',
           type: 'radio',
           options: ['Verilen Konum', 'İstenen Konum'],
           onChange: (event) => {
-            console.log('Gender changed to:', event.target.value);
+            // console.log('Verilen Konum changed to:', event.target.value);
           },
         },
         {
@@ -254,7 +254,7 @@ function App() {
           type: 'select',
           options: ["EURO", "DOLAR", "TL"],
           onChange: (event: SelectChangeEvent<any>) => {
-            console.log('Ay Kodu changed to:', event.target.value);
+            // console.log('Döviz Seçiniz changed to:', event.target.value);
           },
         },
       ],
@@ -262,12 +262,12 @@ function App() {
     {
       elements: [
         {
-          label: '',
+          label: 'Type',
           value: 'Confirmed',
           type: 'radio',
           options: ['Confirmed', 'Tentative', 'All'],
           onChange: (event) => {
-            console.log('Gender changed to:', event.target.value);
+            // console.log('Type changed to:', event.target.value);
           },
         },
       ],
