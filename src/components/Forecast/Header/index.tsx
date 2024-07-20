@@ -11,7 +11,7 @@ import {
   FormControlLabel,
   Radio,
   Typography,
-  Checkbox // Import Checkbox component
+  Checkbox
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { IHeaderSectionConfig } from '@/types/Forecast';

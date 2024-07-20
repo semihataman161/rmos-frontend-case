@@ -22,7 +22,13 @@ const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, 
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Öğeyi Güncelle</DialogTitle>
+            <DialogTitle>
+                {
+                    data.Id === 0 ?
+                        "Yeni Kayıt Ekle" :
+                        "Kaydı Güncelle"
+                }
+            </DialogTitle>
             <DialogContent>
                 <TextField
                     name="Adi"
@@ -114,7 +120,11 @@ const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, 
                     }}
                     color="primary"
                 >
-                    Güncelle
+                    {
+                        data.Id === 0 ?
+                            "Ekle" :
+                            "Güncelle"
+                    }
                 </Button>
             </DialogActions>
         </Dialog>

@@ -7,16 +7,17 @@ import DeleteModal from "@/components/DeleteModal";
 import BlackListAddOrUpdateModal from "@/components/BlackList/AddOrUpdateModal";
 import { toast } from "react-toastify";
 import { IBlackListAddOrUpdateForm, IBlackListTableData, IBlackListRow } from "@/types/BlackList";
-import { IAddOrUpdateBlackListRequest } from "@/types/BlackList";
+import { IBlackListAddOrUpdateRequest } from "@/types/BlackList";
 import { initializeBlackListAddOrUpdateForm } from "@/utils/blackList";
+import { Button } from "@mui/material";
 
 const BlackListOperations: React.FC = () => {
     const [blackList, setBlackList] = useState<IBlackListTableData[]>([]);
     const [loading, setLoading] = useState(true);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [updateModalOpen, setUpdateModalOpen] = useState(false);
+    const [addOrUpdateModalOpen, setAddOrUpdateModalOpen] = useState(false);
     const [selectedDeleteId, setSelectedDeleteId] = useState<number | null>(null);
-    const [updateData, setUpdateData] = useState<IBlackListAddOrUpdateForm>(initializeBlackListAddOrUpdateForm());
+    const [addOrUpdateData, setAddOrUpdateData] = useState<IBlackListAddOrUpdateForm>(initializeBlackListAddOrUpdateForm());
 
     const fetchAndSetBlackList = useCallback(async () => {
         try {
@@ -45,8 +46,13 @@ const BlackListOperations: React.FC = () => {
 
     const handleUpdate = (data: IBlackListRow) => {
         const { id, ...rest } = data;
-        setUpdateData(rest);
-        setUpdateModalOpen(true);
+        setAddOrUpdateData(rest);
+        setAddOrUpdateModalOpen(true);
+    };
+
+    const handleAddNew = () => {
+        setAddOrUpdateData(initializeBlackListAddOrUpdateForm());
+        setAddOrUpdateModalOpen(true);
     };
 
     const confirmDelete = async () => {
@@ -67,7 +73,7 @@ const BlackListOperations: React.FC = () => {
 
     const confirmUpdate = async (updatedData: IBlackListAddOrUpdateForm) => {
         try {
-            const request: IAddOrUpdateBlackListRequest = {
+            const request: IBlackListAddOrUpdateRequest = {
                 db_Id: "9",
                 ...updatedData
             };
@@ -80,16 +86,26 @@ const BlackListOperations: React.FC = () => {
             console.error('Veriyi güncellerken bir hata oluştu: ', error);
             toast.error('Veriyi güncellerken bir hata oluştu.');
         } finally {
-            setUpdateModalOpen(false);
+            setAddOrUpdateModalOpen(false);
         }
     };
 
     return (
         <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem', marginTop: '1rem' }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAddNew}
+                >
+                    Yeni Kayıt Ekle
+                </Button>
+            </div>
             <Table
                 data={blackList}
                 headers={blackListTableHeaders}
                 loading={loading}
+                disableColumnFilter={false}
                 onDelete={handleDelete}
                 onUpdate={handleUpdate}
             />
@@ -100,10 +116,10 @@ const BlackListOperations: React.FC = () => {
                 onConfirm={confirmDelete}
             />
             <BlackListAddOrUpdateModal
-                open={updateModalOpen}
-                onClose={() => setUpdateModalOpen(false)}
+                open={addOrUpdateModalOpen}
+                onClose={() => setAddOrUpdateModalOpen(false)}
                 onConfirm={confirmUpdate}
-                data={updateData}
+                data={addOrUpdateData}
             />
         </>
     );

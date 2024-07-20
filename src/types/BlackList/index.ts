@@ -15,7 +15,7 @@ interface IBlackList {
 export interface IBlackListTableData extends IBlackList {
     id: number;
     Acenta: string | null;
-    Otel_kodu: string | null;  
+    Otel_kodu: string | null;
 }
 
 export interface IBlackListAddOrUpdateForm extends IBlackList {
@@ -25,6 +25,11 @@ export interface IBlackListRow extends IBlackList {
     id: number;
 }
 
-export interface IAddOrUpdateBlackListRequest extends IBlackList {
+export interface IBlackListAddOrUpdateRequest extends IBlackList {
     db_Id: string;
+}
+
+export interface IBlackListGetRequest {
+    db_Id: string;
+    Adi: string;
 }

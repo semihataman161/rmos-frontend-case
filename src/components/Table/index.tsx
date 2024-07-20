@@ -6,9 +6,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ITableProps {
-    data: { id: number; [key: string]: any }[];
+    data: { id: number;[key: string]: any }[];
     headers: { field: string; headerName?: string; sortable?: boolean; valueGetter?: (value: any, row: any) => any }[];
     loading?: boolean;
+    disableColumnFilter?: boolean;
     isAggregationAllowed?: boolean;
     onDelete?: (id: number) => void;
     onUpdate?: (data: any) => void;
@@ -40,6 +41,7 @@ export default function Table({
     headers,
     loading = false,
     isAggregationAllowed = false,
+    disableColumnFilter = true,
     onDelete,
     onUpdate
 }: ITableProps) {
@@ -116,7 +118,7 @@ export default function Table({
                 pageSizeOptions={[15, 50, 100]}
                 disableRowSelectionOnClick
                 loading={loading}
-                disableColumnFilter
+                disableColumnFilter={disableColumnFilter}
                 getCellClassName={getRowClassName}
                 autoHeight={true}
             />

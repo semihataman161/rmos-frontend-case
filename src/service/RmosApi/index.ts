@@ -1,7 +1,7 @@
 import Api from "@/service/Api";
 import { ICreateTokenRequest } from "@/types/Token";
 import { IGetReservationRequest } from "@/types/Forecast";
-import { IGetBlackListRequest, IAddOrUpdateBlackListRequest  } from "@/types/BlackList";
+import { IBlackListGetRequest, IBlackListAddOrUpdateRequest  } from "@/types/BlackList";
 
 const serviceUrl = import.meta.env.VITE_SERVICE_URL;
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -28,7 +28,7 @@ export async function getReservation(data: IGetReservationRequest) {
     return response.data;
 }
 
-export async function getBlackList(data: IGetBlackListRequest) {
+export async function getBlackList(data: IBlackListGetRequest) {
     const response = await Api({
         method: "POST",
         url: `${apiUrl}/api/Kara/Getir_Kod`,
@@ -38,7 +38,7 @@ export async function getBlackList(data: IGetBlackListRequest) {
     return response.data;
 }
 
-export async function addOrUpdateBlackList(data: IAddOrUpdateBlackListRequest) {
+export async function addOrUpdateBlackList(data: IBlackListAddOrUpdateRequest) {
     const response = await Api({
         method: "POST",
         url: `${apiUrl}/api/Kara/Ekle`,
