@@ -36,7 +36,6 @@ function CustomNoRowsOverlay() {
 }
 
 export default function Table({ data, headers, loading = false, isAggregationAllowed = false, onDelete, onUpdate }: ITableProps) {
-    // Define columns
     const columns: GridColDef[] = [
         ...headers.map(({ field, headerName, sortable = true, valueGetter }) => ({
             field,
@@ -89,6 +88,7 @@ export default function Table({ data, headers, loading = false, isAggregationAll
                     border: 1,
                     borderColor: 'primary.light',
                 },
+                height: '56rem'
             }}
         >
             <DataGrid

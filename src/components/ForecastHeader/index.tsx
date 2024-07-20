@@ -68,7 +68,7 @@ const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: 16, backgroundColor: '#e3f2fd' }}>
+    <Paper elevation={3} style={{ padding: 16, backgroundColor: '#f0f0f0' }}>
       <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '25px' }}>
         {localSections.map((section, sectionIndex) => (
           <Grid
