@@ -11,7 +11,7 @@ interface ITableProps {
     loading?: boolean;
     isAggregationAllowed?: boolean;
     onDelete?: (id: number) => void;
-    onUpdate?: (id: number) => void;
+    onUpdate?: (data: any) => void;
 }
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
@@ -67,7 +67,7 @@ export default function Table({
                         <GridActionsCellItem
                             icon={<EditIcon />}
                             label="Update"
-                            onClick={() => onUpdate(params.row.id)}
+                            onClick={() => onUpdate(params.row)}
                             color="primary"
                         />
                     )}

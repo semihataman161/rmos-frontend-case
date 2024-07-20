@@ -1,19 +1,22 @@
 import { useState, useCallback, useEffect } from "react";
 import BlackListFooter from "@/components/BlackList/Footer";
-import { getBlackList } from "@/service/RmosApi";
+import { getBlackList, addOrUpdateBlackList } from "@/service/RmosApi";
 import Table from "@/components/Table";
 import { blackListTableHeaders } from "@/constants/Table";
 import DeleteModal from "@/components/DeleteModal";
-import UpdateModal from "@/components/BlackList/UpdateModal";
+import BlackListAddOrUpdateModal from "@/components/BlackList/AddOrUpdateModal";
+import { toast } from "react-toastify";
+import { IBlackListAddOrUpdateForm, IBlackListTableData, IBlackListRow } from "@/types/BlackList";
+import { IAddOrUpdateBlackListRequest } from "@/types/BlackList";
+import { initializeBlackListAddOrUpdateForm } from "@/utils/blackList";
 
 const BlackListOperations: React.FC = () => {
-    const [blackList, setBlackList] = useState<any[]>([]);
+    const [blackList, setBlackList] = useState<IBlackListTableData[]>([]);
     const [loading, setLoading] = useState(true);
-
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [updateModalOpen, setUpdateModalOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState<number | null>(null);
-    const [selectedData, setSelectedData] = useState<any>(null);
+    const [selectedDeleteId, setSelectedDeleteId] = useState<number | null>(null);
+    const [updateData, setUpdateData] = useState<IBlackListAddOrUpdateForm>(initializeBlackListAddOrUpdateForm());
 
     const fetchAndSetBlackList = useCallback(async () => {
         try {
@@ -23,11 +26,11 @@ const BlackListOperations: React.FC = () => {
             };
 
             const response = await getBlackList(request);
-            const arrangedBlackList = response.value.map((element: any) => ({ id: element.Id, ...element }));
+            const arrangedBlackList: IBlackListTableData[] = response.value.map((element: any) => ({ id: element.Id, ...element }));
             setBlackList(arrangedBlackList);
             setLoading(false);
         } catch (error) {
-            console.error('Failed to fetch and set reservation:', error);
+            console.error('Failed to fetch and set blacklist:', error);
         }
     }, []);
 
@@ -36,28 +39,49 @@ const BlackListOperations: React.FC = () => {
     }, [fetchAndSetBlackList]);
 
     const handleDelete = (id: number) => {
-        setSelectedId(id);
+        setSelectedDeleteId(id);
         setDeleteModalOpen(true);
     };
 
-    const handleUpdate = (id: number) => {
-        const data = blackList.find(item => item.id === id);
-        if (data) {
-            setSelectedData(data);
-            setUpdateModalOpen(true);
-        }
+    const handleUpdate = (data: IBlackListRow) => {
+        const { id, ...rest } = data;
+        setUpdateData(rest);
+        setUpdateModalOpen(true);
     };
 
     const confirmDelete = async () => {
-        if (selectedId !== null) {
-            console.log('Delete row with id:', selectedId);
-            setDeleteModalOpen(false);
+        if (selectedDeleteId !== null) {
+            try {
+                const updatedBlackList = blackList.filter(item => item.id !== selectedDeleteId);
+                setBlackList(updatedBlackList);
+
+                toast.success('Veri başarılı bir şekilde silindi.');
+            } catch (error) {
+                console.error('Veriyi silerken bir hata oluştu: ', error);
+                toast.error('Veriyi silerken bir hata oluştu.');
+            } finally {
+                setDeleteModalOpen(false);
+            }
         }
     };
 
-    const confirmUpdate = async (updatedData: any) => {
-        console.log('Update row with data:', updatedData);
-        setUpdateModalOpen(false);
+    const confirmUpdate = async (updatedData: IBlackListAddOrUpdateForm) => {
+        try {
+            const request: IAddOrUpdateBlackListRequest = {
+                db_Id: "9",
+                ...updatedData
+            };
+
+            await addOrUpdateBlackList(request);
+            await fetchAndSetBlackList();
+
+            toast.success('Veri başarılı bir şekilde güncellendi.');
+        } catch (error) {
+            console.error('Veriyi güncellerken bir hata oluştu: ', error);
+            toast.error('Veriyi güncellerken bir hata oluştu.');
+        } finally {
+            setUpdateModalOpen(false);
+        }
     };
 
     return (
@@ -75,11 +99,11 @@ const BlackListOperations: React.FC = () => {
                 onClose={() => setDeleteModalOpen(false)}
                 onConfirm={confirmDelete}
             />
-            <UpdateModal
+            <BlackListAddOrUpdateModal
                 open={updateModalOpen}
                 onClose={() => setUpdateModalOpen(false)}
                 onConfirm={confirmUpdate}
-                initialData={selectedData || {}}
+                data={updateData}
             />
         </>
     );

@@ -58,6 +58,6 @@ export const blackListTableHeaders = [
     },
     { field: "Aciklama", headerName: 'Açıklama' },
     { field: "Sistem_grubu", headerName: 'Grubu' },
-    { field: "Xml Kodu", headerName: 'Milliyet' },
+    { field: "Ulke_xml", headerName: 'Milliyet' },
     { field: "Kulanici", headerName: 'Kullanıcı' },
 ];

@@ -14,16 +14,16 @@ import {
   Checkbox // Import Checkbox component
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { ISectionConfig } from '@/types/ForecastHeader';
+import { IHeaderSectionConfig } from '@/types/Forecast';
 import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
 
 interface IProps {
-  sections?: ISectionConfig[];
+  sections?: IHeaderSectionConfig[];
 }
 
 const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
-  const [localSections, setLocalSections] = useState<ISectionConfig[]>(sections);
+  const [localSections, setLocalSections] = useState<IHeaderSectionConfig[]>(sections);
 
   const handleChange = (sectionIndex: number, elementIndex: number) => (
     event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>,

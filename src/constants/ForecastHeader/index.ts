@@ -1,7 +1,8 @@
-import { ISectionConfig } from "@/types/ForecastHeader";
+import { IHeaderSectionConfig } from "@/types/Forecast";
 import { SelectChangeEvent } from "@mui/material";
+import { Dayjs } from "dayjs";
 
-export const sections: ISectionConfig[] = [
+export const sections: IHeaderSectionConfig[] = [
     {
         elements: [
             {

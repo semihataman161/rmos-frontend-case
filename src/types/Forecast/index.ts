@@ -1,9 +1,18 @@
-export interface ICreateTokenRequest {
-    userName: string;
-    password: string;
+import { SelectChangeEvent } from '@mui/material';
+
+export interface IHeaderElementConfig {
+    label: string;
+    value: string | Date | boolean;
+    type: 'text' | 'select' | 'date' | 'radio' | 'checkbox';
+    options?: string[];
+    onChange?: (event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<any>, newValue?: any) => void;
 }
 
-export interface IReservationRequest {
+export interface IHeaderSectionConfig {
+    elements: IHeaderElementConfig[];
+}
+
+export interface IGetReservationRequest {
     db_Id: number;
     xRez_Sirket: number;
     xBas_Tar: string;
@@ -25,9 +34,4 @@ export interface IReservationRequest {
     xFis_Bela_tutar_10: number;
     trace_Dus_10: number;
     cev_01: null;
-}
-
-export interface IBlackListRequest {
-    db_Id: string;
-    Adi: string;
 }
