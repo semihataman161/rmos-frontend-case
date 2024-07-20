@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ITableProps {
-    data: { id: number;[key: string]: any }[];
+    data: { id: number; [key: string]: any }[];
     headers: { field: string; headerName?: string; sortable?: boolean; valueGetter?: (value: any, row: any) => any }[];
     loading?: boolean;
     isAggregationAllowed?: boolean;
@@ -35,14 +35,26 @@ function CustomNoRowsOverlay() {
     );
 }
 
-export default function Table({ data, headers, loading = false, isAggregationAllowed = false, onDelete, onUpdate }: ITableProps) {
+export default function Table({
+    data,
+    headers,
+    loading = false,
+    isAggregationAllowed = false,
+    onDelete,
+    onUpdate
+}: ITableProps) {
     const columns: GridColDef[] = [
         ...headers.map(({ field, headerName, sortable = true, valueGetter }) => ({
             field,
             headerName: headerName ?? field.charAt(0).toUpperCase() + field.slice(1),
             sortable: sortable,
             width: 150,
-            valueGetter,
+            valueGetter: (value: any, row: any) => {
+                if (isAggregationAllowed && row.id === data[data.length - 1]?.id && value !== '' && value !== undefined) {
+                    return `Toplam: ${valueGetter ? valueGetter(value, row) : value}`;
+                }
+                return valueGetter ? valueGetter(value, row) : value;
+            },
         })),
         ...(onUpdate || onDelete ? [{
             field: 'actions',
