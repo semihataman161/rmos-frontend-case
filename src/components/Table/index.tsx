@@ -97,10 +97,10 @@ export default function Table({
         <Box
             sx={{
                 [`.${gridClasses.cell}.last-row`]: {
-                    backgroundColor: '#90EE90',
-                    color: '#000000',
+                    backgroundColor: '#e0f7fa',
+                    color: '#0277bd',
                     border: 1,
-                    borderColor: 'primary.light',
+                    borderColor: '#b3e5fc',
                 },
             }}
         >

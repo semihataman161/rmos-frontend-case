@@ -92,7 +92,7 @@ const BlackListOperations: React.FC = () => {
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem', marginTop: '1rem' }}>
+            <div style={{ marginBottom: '1rem', marginTop: '1rem' }}>
                 <Button
                     variant="contained"
                     color="primary"
