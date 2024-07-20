@@ -1,4 +1,4 @@
-import { ISectionConfig } from "@/types/Header";
+import { ISectionConfig } from "@/types/ForecastHeader";
 import { SelectChangeEvent } from "@mui/material";
 
 export const sections: ISectionConfig[] = [

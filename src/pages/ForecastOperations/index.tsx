@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import Header from '@/components/Header';
+import ForecastHeader from '@/components/ForecastHeader';
 import Table from '@/components/Table';
 import CustomTab from '@/components/CustomTab';
-import Footer from '@/components/Footer';
-import { sections } from '@/constants/Header';
+import ForecastFooter from '@/components/ForecastFooter';
+import { sections } from '@/constants/ForecastHeader';
 import { tableHeaders } from '@/constants/Table';
 import { getReservation } from '@/service/RmosApi';
 
@@ -83,11 +83,11 @@ const ForecastOperations: React.FC = () => {
 
     return (
         <>
-            <Header sections={sections} />
+            <ForecastHeader sections={sections} />
             <div style={{ marginTop: '30px' }}>
                 <CustomTab tabContent={tabContent} initialSelectedTab="Forecast Grafiği" />
             </div>
-            <Footer />
+            <ForecastFooter />
         </>
     );
 };

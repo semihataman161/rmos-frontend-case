@@ -8,7 +8,7 @@ import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import { Box, Button, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-const Footer: React.FC = () => {
+const ForecastFooter: React.FC = () => {
     const [orientation, setOrientation] = React.useState('YATAY');
     const [paperSize, setPaperSize] = React.useState('A4');
 
@@ -94,4 +94,4 @@ const Footer: React.FC = () => {
     );
 };
 
-export default Footer;
+export default ForecastFooter;

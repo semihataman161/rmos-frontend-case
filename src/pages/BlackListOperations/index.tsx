@@ -1,7 +1,9 @@
+import BlackListFooter from "@/components/BlackListFooter"
+
 const BlackListOperations: React.FC = () => {
     return (
         <>
-            <p>Black List Operations</p>
+            <BlackListFooter />
         </>
     );
 };

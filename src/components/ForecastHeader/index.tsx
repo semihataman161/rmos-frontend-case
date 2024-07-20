@@ -14,7 +14,7 @@ import {
   Checkbox // Import Checkbox component
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { ISectionConfig } from '@/types/Header';
+import { ISectionConfig } from '@/types/ForecastHeader';
 import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -22,7 +22,7 @@ interface IProps {
   sections?: ISectionConfig[];
 }
 
-const Header: React.FC<IProps> = ({ sections = [] }) => {
+const ForecastHeader: React.FC<IProps> = ({ sections = [] }) => {
   const [localSections, setLocalSections] = useState<ISectionConfig[]>(sections);
 
   const handleChange = (sectionIndex: number, elementIndex: number) => (
@@ -69,7 +69,7 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
 
   return (
     <Paper elevation={3} style={{ padding: 16, backgroundColor: '#e3f2fd' }}>
-      <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', gap: '16px' }}>
+      <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '25px' }}>
         {localSections.map((section, sectionIndex) => (
           <Grid
             key={sectionIndex}
@@ -80,11 +80,11 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              gap: '16px',
+              gap: '10px',
               border: '1px solid #ccc',
               borderRadius: '8px',
               padding: '10px',
-              maxWidth: { xs: 'none', sm: '190px' }
+              maxWidth: { xs: 'none', sm: '190px' },
             }}
           >
             {section.elements.map(({ label, value, type, options }, elementIndex) => (
@@ -159,4 +159,4 @@ const Header: React.FC<IProps> = ({ sections = [] }) => {
   );
 };
 
-export default Header;
+export default ForecastHeader;
