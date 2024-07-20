@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { sleep } from "@/utils/system";
 
 const api = axios.create({
     headers: {
@@ -7,13 +8,17 @@ const api = axios.create({
     },
 });
 
-api.interceptors.request.use(config => {
-    const authToken = localStorage.getItem('authToken');
+api.interceptors.request.use(async config => {
+    let authToken = localStorage.getItem('authToken');
 
-    if (authToken) {
-        config.headers.Authorization = `Bearer ${authToken}`;
+    // Retry mechanism if authToken is not available
+    while (!authToken) {
+        console.warn('No authToken found in localStorage. Retrying in 1 second...');
+        await sleep(1000);
+        authToken = localStorage.getItem('authToken');
     }
 
+    config.headers.Authorization = `Bearer ${authToken}`;
     return config;
 });
 
