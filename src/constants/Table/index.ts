@@ -1,5 +1,5 @@
-import { formatDate, getDayName } from '@/utils/dates';
-import { formatNumberByPrecision } from '@/utils/numbers';
+import { formatDate, getDayName } from '@/utils/date';
+import { formatNumberByPrecision } from '@/utils/number';
 
 export const forecastTableHeaders = [
     {
@@ -7,8 +7,8 @@ export const forecastTableHeaders = [
         headerName: 'Tarih',
         valueGetter: (value: any, row: any) => formatDate(value)
     },
-    { field: "Mevcut", headerName: 'Mevcut' },
-    { field: "Oda", headerName: 'Oda' },
+    { field: "Mevcut(Net)", headerName: 'Mevcut' },
+    { field: "Net Oda", headerName: 'Oda' },
     { field: "Yetişkin", headerName: 'Yetişkin' },
     { field: "Çocuk", headerName: 'Çocuk' },
     { field: "Free", headerName: 'Free' },

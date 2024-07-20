@@ -6,9 +6,11 @@ import ForecastFooter from '@/components/Forecast/Footer';
 import { sections } from '@/constants/ForecastHeader';
 import { forecastTableHeaders } from '@/constants/Table';
 import { getReservation } from '@/service/RmosApi';
+import ForecastGraph from '@/components/ForecastGraph';
 
 const ForecastOperations: React.FC = () => {
     const [reservations, setReservations] = useState<any[]>([]);
+    const [totalReservations, setTotalReservations] = useState<any>({});
     const [loading, setLoading] = useState(true);
 
     const fetchAndSetReservation = useCallback(async () => {
@@ -40,7 +42,7 @@ const ForecastOperations: React.FC = () => {
             const response = await getReservation(request);
             const arrangedReservations = response.value.map((element: any, index: number) => ({ id: index, ...element }));
 
-            const aggregatedValues = arrangedReservations.reduce((accumulator: any, currentObject: any) => {
+            const TotalReservations = arrangedReservations.reduce((accumulator: any, currentObject: any) => {
                 for (const [key, value] of Object.entries(currentObject)) {
                     if (typeof value === 'number') {
                         accumulator[key] = (accumulator[key] || 0) + value;
@@ -57,7 +59,8 @@ const ForecastOperations: React.FC = () => {
                 return accumulator;
             }, {});
 
-            setReservations([...arrangedReservations, aggregatedValues]);
+            setTotalReservations(TotalReservations);
+            setReservations([...arrangedReservations, TotalReservations]);
             setLoading(false);
         } catch (error) {
             console.error('Failed to fetch and set reservation:', error);
@@ -72,7 +75,7 @@ const ForecastOperations: React.FC = () => {
         "Mevcut Forecast": <>NOT IPLEMENTED YET</>,
         "Acenta Forecast": <>NOT IPLEMENTED YET</>,
         "StopSale Forecast": <>NOT IPLEMENTED YET</>,
-        "Forecast Grafiği": <></>,
+        "Forecast Grafiği": <ForecastGraph totalReservations={totalReservations}/>,
         "Tarih Forecast": <Table data={reservations} headers={forecastTableHeaders} loading={loading} isAggregationAllowed={true} />,
         "Detay Forecast": <>NOT IPLEMENTED YET</>,
         "Waiting Forecast": <>NOT IPLEMENTED YET</>,
