@@ -1,44 +1,32 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createToken } from '@/service/RmosApi';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import CustomMenu from './components/CustomMenu';
 import Footer from './components/Footer';
+import Login from './pages/Login';
 
 function App() {
-  const fetchAndSetBearerToken = useCallback(async () => {
-    try {
-      const request = {
-        userName: import.meta.env.VITE_USERNAME,
-        password: import.meta.env.VITE_PASSWORD
-      };
-
-      const response = await createToken(request);
-      localStorage.setItem('authToken', response);
-    } catch (error) {
-      console.error('Failed to fetch and set token:', error);
-    }
-  }, []);
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchAndSetBearerToken();
-  }, [fetchAndSetBearerToken]);
+    setAuthToken(localStorage.getItem('authToken'));
+  }, []);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh'
-      }}>
-        <div style={{ flex: 1 }}>
-          <ToastContainer />
-          <CustomMenu />
-        </div>
-        <Footer />
+      <ToastContainer />
+      <div>
+        {authToken ? (
+          <div style={{ flex: 1, minHeight: '100vh', paddingBottom: '80px' }}>
+            <CustomMenu />
+          </div>
+        ) : (
+          <Login />
+        )}
       </div>
+      <Footer />
     </LocalizationProvider>
   );
 }

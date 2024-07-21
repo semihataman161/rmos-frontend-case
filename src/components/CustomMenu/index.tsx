@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -20,6 +21,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 import ForecastOperations from '@/pages/ForecastOperations';
 import BlackListOperations from '@/pages/BlackListOperations';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
@@ -108,6 +110,11 @@ export default function CustomMenu() {
         setSelectedIndex(index);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        window.location.reload();
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -125,9 +132,13 @@ export default function CustomMenu() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         RMOS Yazılım
                     </Typography>
+                    <Button color="inherit" onClick={handleLogout} sx={{ marginRight: '10px' }}>
+                        <LogoutIcon sx={{ marginRight: '10px' }} />
+                        Çıkış Yap
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
