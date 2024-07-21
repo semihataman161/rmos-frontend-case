@@ -26,7 +26,7 @@ const Login: React.FC = () => {
             if (token) {
                 window.location.reload();
             } else {
-                setError('Kimlik doğrulama başarısız oldu. Lütfen tekrar deneyin.');
+                setError('Kimlik doğrulaması başarısız oldu. Lütfen tekrar deneyin.');
             }
             return;
         }
