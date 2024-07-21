@@ -1,15 +1,13 @@
 import Api from "@/service/Api";
 import { ICreateTokenRequest } from "@/types/Token";
 import { IGetReservationRequest } from "@/types/Forecast";
-import { IBlackListGetRequest, IBlackListAddOrUpdateRequest  } from "@/types/BlackList";
-
-const serviceUrl = import.meta.env.VITE_SERVICE_URL;
-const apiUrl = import.meta.env.VITE_API_URL;
+import { IBlackListGetRequest, IBlackListAddOrUpdateRequest } from "@/types/BlackList";
+import { SERVICE_URL, API_URL } from "@/constants/Api";
 
 export async function createToken(data: ICreateTokenRequest) {
     const response = await Api({
         method: "POST",
-        url: `${serviceUrl}/security/createToken`,
+        url: `${SERVICE_URL}/security/createToken`,
         data,
         withCredentials: false,
     });
@@ -21,7 +19,7 @@ export async function createToken(data: ICreateTokenRequest) {
 export async function getReservation(data: IGetReservationRequest) {
     const response = await Api({
         method: "POST",
-        url: `${apiUrl}/api/Procedure/StpRmforKlasik_2`,
+        url: `${API_URL}/api/Procedure/StpRmforKlasik_2`,
         data,
     });
 
@@ -31,7 +29,7 @@ export async function getReservation(data: IGetReservationRequest) {
 export async function getBlackList(data: IBlackListGetRequest) {
     const response = await Api({
         method: "POST",
-        url: `${apiUrl}/api/Kara/Getir_Kod`,
+        url: `${API_URL}/api/Kara/Getir_Kod`,
         data,
     });
 
@@ -41,7 +39,7 @@ export async function getBlackList(data: IBlackListGetRequest) {
 export async function addOrUpdateBlackList(data: IBlackListAddOrUpdateRequest) {
     const response = await Api({
         method: "POST",
-        url: `${apiUrl}/api/Kara/Ekle`,
+        url: `${API_URL}/api/Kara/Ekle`,
         data,
     });
 
