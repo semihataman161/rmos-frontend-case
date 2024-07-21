@@ -7,9 +7,10 @@ interface UpdateModalProps {
     onClose: () => void;
     onConfirm: (updatedData: IBlackListAddOrUpdateForm) => void;
     data: IBlackListAddOrUpdateForm;
+    isUpdate: boolean;
 }
 
-const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, onConfirm, data }) => {
+const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, onConfirm, data, isUpdate }) => {
     const [formData, setFormData] = useState<IBlackListAddOrUpdateForm>(data);
 
     useEffect(() => {
@@ -23,11 +24,7 @@ const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, 
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>
-                {
-                    data.Id === 0 ?
-                        "Yeni Kayıt Ekle" :
-                        "Kaydı Güncelle"
-                }
+                {isUpdate ? "Kaydı Güncelle" : "Yeni Kayıt Ekle"}
             </DialogTitle>
             <DialogContent>
                 <TextField
@@ -120,11 +117,7 @@ const BlackListAddOrUpdateModal: React.FC<UpdateModalProps> = ({ open, onClose, 
                     }}
                     color="primary"
                 >
-                    {
-                        data.Id === 0 ?
-                            "Ekle" :
-                            "Güncelle"
-                    }
+                    {isUpdate ? "Güncelle" : "Ekle"}
                 </Button>
             </DialogActions>
         </Dialog>

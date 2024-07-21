@@ -18,6 +18,7 @@ const BlackListOperations: React.FC = () => {
     const [addOrUpdateModalOpen, setAddOrUpdateModalOpen] = useState(false);
     const [selectedDeleteId, setSelectedDeleteId] = useState<number | null>(null);
     const [addOrUpdateData, setAddOrUpdateData] = useState<IBlackListAddOrUpdateForm>(initializeBlackListAddOrUpdateForm());
+    const [isUpdate, setUpdate] = useState(false);
 
     const fetchAndSetBlackList = useCallback(async () => {
         try {
@@ -47,6 +48,7 @@ const BlackListOperations: React.FC = () => {
     const handleUpdate = (data: IBlackListRow) => {
         const { id, ...rest } = data;
         setAddOrUpdateData(rest);
+        setUpdate(Boolean(data.Id));
         setAddOrUpdateModalOpen(true);
     };
 
@@ -71,7 +73,7 @@ const BlackListOperations: React.FC = () => {
         }
     };
 
-    const confirmUpdate = async (updatedData: IBlackListAddOrUpdateForm) => {
+    const confirmAddOrUpdate = async (updatedData: IBlackListAddOrUpdateForm) => {
         try {
             const request: IBlackListAddOrUpdateRequest = {
                 db_Id: "9",
@@ -81,10 +83,19 @@ const BlackListOperations: React.FC = () => {
             await addOrUpdateBlackList(request);
             await fetchAndSetBlackList();
 
-            toast.success('Veri başarılı bir şekilde güncellendi.');
+            if (isUpdate) {
+                toast.success('Veri başarılı bir şekilde güncellendi.');
+            } else {
+                toast.success('Veri başarılı bir şekilde eklendi.');
+            }
         } catch (error) {
-            console.error('Veriyi güncellerken bir hata oluştu: ', error);
-            toast.error('Veriyi güncellerken bir hata oluştu.');
+            if (isUpdate) {
+                console.error('Veriyi güncellerken bir hata oluştu: ', error);
+                toast.error('Veriyi güncellerken bir hata oluştu.');
+            } else {
+                console.error('Veri eklerken bir hata oluştu: ', error);
+                toast.error('Veri eklerken bir hata oluştu.');
+            }
         } finally {
             setAddOrUpdateModalOpen(false);
         }
@@ -118,8 +129,9 @@ const BlackListOperations: React.FC = () => {
             <BlackListAddOrUpdateModal
                 open={addOrUpdateModalOpen}
                 onClose={() => setAddOrUpdateModalOpen(false)}
-                onConfirm={confirmUpdate}
+                onConfirm={confirmAddOrUpdate}
                 data={addOrUpdateData}
+                isUpdate={isUpdate}
             />
         </>
     );
