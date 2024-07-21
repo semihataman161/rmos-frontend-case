@@ -9,10 +9,17 @@ import Login from './pages/Login';
 
 function App() {
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setAuthToken(localStorage.getItem('authToken'));
+    const token = localStorage.getItem('authToken');
+    setAuthToken(token);
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
