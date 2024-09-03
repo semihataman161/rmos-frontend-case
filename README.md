@@ -6,5 +6,5 @@ yarn dev
 
 # User credentials
 
-Username: semih@test.com
+Username: semih@test.com <br />
 Password: semih
