@@ -3,3 +3,8 @@
 npm run dev
 or
 yarn dev
+
+# User credentials
+
+Username: semih@test.com
+Password: semih
